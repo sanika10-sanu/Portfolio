@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <style>
+    * { margin:0; padding:0; box-sizing:border-box; font-family:'Poppins', sans-serif; }
+    html { scroll-behavior: smooth; }
+    body { background: #f5f5f5; color: #333; line-height: 1.5; }
+
+    header {
+      position: fixed; top:0; width:100%; background:#222; color:#fff;
+      padding:0.8rem 1.5rem; display:flex; justify-content:space-between; align-items:center; z-index:1000;
+    }
+    header h1 { font-size:1.3rem; }
+    nav a { color:#fff; margin:0 0.7rem; text-decoration:none; font-weight:500; font-size:0.9rem; }
+    nav a:hover { color:#00adb5; }
+
+    section {
+      padding: 40px 15px; min-height:60vh;
+      scroll-margin-top:90px; opacity:0; transform:translateY(20px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    section.show { opacity:1; transform:translateY(0); }
+
+    .home { display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center; }
+    .home h2 { font-size:2rem; margin-bottom:0.5rem; }
+    .home p { font-size:1rem; color:#555; margin-bottom:0.8rem; }
+
+    .about, .skills, .projects, .resume, .contact { max-width:900px; margin:auto; }
+
+    h2.section-title { font-size:1.8rem; margin-bottom:0.8rem; color:#00adb5; text-align:center; }
+    p { margin-bottom:0.8rem; }
+
+    /* Skill cards colorful */
+    .skills-list { display:grid; grid-template-columns:repeat(auto-fit, minmax(100px,1fr)); gap:1rem; text-align:center; }
+    .skill {
+      color:#fff; border-radius:10px; padding:0.6rem; font-size:0.85rem;
+      opacity:0; transform:translateY(15px); transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .skill.show { opacity:1; transform:translateY(0); }
+
+    /* Colorful gradient backgrounds for skills */
+    .skill:nth-child(1){ background: linear-gradient(135deg,#ff7e5f,#feb47b);}
+    .skill:nth-child(2){ background: linear-gradient(135deg,#6a11cb,#2575fc);}
+    .skill:nth-child(3){ background: linear-gradient(135deg,#43cea2,#185a9d);}
+    .skill:nth-child(4){ background: linear-gradient(135deg,#f7971e,#ffd200);}
+    .skill:nth-child(5){ background: linear-gradient(135deg,#fc4a1a,#f7b733);}
+    .skill:nth-child(6){ background: linear-gradient(135deg,#11998e,#38ef7d);}
+
+    /* Projects */
+    .projects-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(250px,1fr)); gap:1rem; }
+    .project-card {
+      border-radius:10px; padding:1rem; color:#fff; opacity:0; transform:translateY(15px);
+      transition: opacity 0.6s ease, transform 0.6s ease, transform 0.3s;
+    }
+    .project-card.show { opacity:1; transform:translateY(0); }
+    .project-card:hover { transform:translateY(-4px); }
+    .project-card h3 { margin-bottom:0.5rem; font-size:1.1rem; }
+    .project-card a { color:#fff; text-decoration:none; margin-right:0.4rem; font-size:0.85rem; }
+
+    /* Colorful gradient backgrounds for projects */
+    .project-card:nth-child(1){ background: linear-gradient(135deg,#ff6a00,#ee0979);}
+    .project-card:nth-child(2){ background: linear-gradient(135deg,#00f260,#0575e6);}
+    .project-card:nth-child(3){ background: linear-gradient(135deg,#fc5c7d,#6a82fb);}
+
+    .resume a {
+      display:inline-block; background:#00adb5; color:#fff; padding:0.6rem 1rem; border-radius:5px;
+      text-decoration:none; margin-top:0.5rem; font-size:0.9rem;
+    }
+    .resume a:hover { background:#007b80; }
+
+    .contact form { display:flex; flex-direction:column; gap:0.6rem; }
+    .contact input, .contact textarea { padding:0.6rem; border-radius:5px; border:1px solid #ccc; font-size:0.9rem; }
+    .contact button { background:#00adb5; color:#fff; padding:0.6rem; border:none; border-radius:5px; cursor:pointer; font-size:0.9rem; }
+    .contact button:hover { background:#007b80; }
+
+    footer { background:#222; color:#fff; text-align:center; padding:0.8rem; font-size:0.85rem; }
+
+    body.dark { background:#121212; color:#eee; }
+    body.dark header { background:#111; }
+    body.dark footer { background:#111; }
+    .dark-toggle { cursor:pointer; background:#00adb5; border:none; padding:0.4rem 0.8rem; color:#fff; border-radius:5px; font-size:0.9rem; }
+
+    @media(max-width:480px){
+      header h1{font-size:1.1rem;} nav a{font-size:0.8rem; margin:0 0.5rem;}
+      .home h2{font-size:1.6rem;} .home p{font-size:0.9rem;} h2.section-title{font-size:1.5rem;}
+      .skill{font-size:0.8rem; padding:0.5rem;} .project-card{font-size:0.85rem; padding:0.8rem;}
+      .project-card h3{font-size:1rem;} .contact input,textarea,button{font-size:0.85rem;padding:0.5rem;}
+      .resume a{font-size:0.85rem; padding:0.5rem 0.9rem;} section{padding:30px 10px; min-height:55vh;}
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>My Portfolio</h1>
+    <nav>
+      <a href="#home">Home</a>
+      <a href="#about">About</a>
+      <a href="#skills">Skills</a>
+      <a href="#projects">Projects</a>
+      <a href="#resume">Resume</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <button class="dark-toggle" onclick="toggleDarkMode()">🌙</button>
+  </header>
+
+  <section class="home" id="home">
+    <h2>Hi, I'm Sanika👋</h2>
+    <p>Aspiring AI/ML Engineer | Web Developer | Tech Enthusiast</p>
+  </section>
+
+  <section class="about" id="about">
+    <h2 class="section-title">About Me</h2>
+    <p>I am a 2nd-year student passionate about AI/ML and Web Development. I love building real-world projects that combine modern frontend design with machine learning applications.</p>
+  </section>
+
+  <section class="skills" id="skills">
+    <h2 class="section-title">Skills</h2>
+    <div class="skills-list">
+      <div class="skill">HTML5</div>
+      <div class="skill">CSS3</div>
+      <div class="skill">JavaScript</div>
+      <div class="skill">Python</div>
+      <div class="skill">Machine Learning</div>
+      <div class="skill">Git & GitHub</div>
+    </div>
+  </section>
+
+  <section class="projects" id="projects">
+    <h2 class="section-title">Projects</h2>
+    <div class="projects-grid">
+      <div class="project-card">
+        <h3>Portfolio Website</h3>
+        <p>Responsive personal portfolio showcasing my skills and projects.</p>
+        <a href="#">GitHub Repo</a> | <a href="#">Live Demo</a>
+      </div>
+      <div class="project-card">
+        <h3>Spam Email Classifier</h3>
+        <p>Machine Learning project to classify spam vs ham emails.</p>
+        <a href="#">GitHub Repo</a>
+      </div>
+      <div class="project-card">
+        <h3>Landing Page Clone</h3>
+        <p>Recreated the UI of Netflix landing page with HTML & CSS.</p>
+        <a href="#">GitHub Repo</a> | <a href="#">Live Demo</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="resume" id="resume">
+    <h2 class="section-title">Resume</h2>
+    <p>Download my resume for more details about my education and experience.</p>
+    <a href="resume.pdf" download>Download Resume</a>
+  </section>
+
+  <section class="contact" id="contact">
+    <h2 class="section-title">Contact Me</h2>
+    <form>
+      <input type="text" placeholder="Your Name" required>
+      <input type="email" placeholder="Your Email" required>
+      <textarea rows="5" placeholder="Your Message" required></textarea>
+      <button type="submit">Send Message</button>
+    </form>
+  </section>
+
+  <footer>© 2025 Sanika Kalyani | Built with ❤️ using HTML, CSS, JS</footer>
+
+  <script>
+    function toggleDarkMode(){
+      const btn=document.querySelector('.dark-toggle');
+      document.body.classList.toggle('dark');
+      btn.textContent = document.body.classList.contains('dark') ? '🌞' : '🌙';
+    }
+
+    // Staggered animations
+    const skills=document.querySelectorAll('.skill');
+    const projects=document.querySelectorAll('.project-card');
+    const sections=document.querySelectorAll('section');
+
+    // Animate sections normally
+    const observer = new IntersectionObserver(entries=>{
+      entries.forEach(entry=>{
+        if(entry.isIntersecting) entry.target.classList.add('show');
+      });
+    },{threshold:0.1});
+    sections.forEach(section=>observer.observe(section));
+
+    // Stagger skill animations
+    skills.forEach((skill,index)=>{
+      observer.observe(skill);
+      skill.style.transitionDelay = `${index * 0.15}s`;
+    });
+
+    // Stagger project animations
+    projects.forEach((project,index)=>{
+      observer.observe(project);
+      project.style.transitionDelay = `${index * 0.2}s`;
+    });
+  </script>
+</body>
+</html>
+
+
+
+
+
